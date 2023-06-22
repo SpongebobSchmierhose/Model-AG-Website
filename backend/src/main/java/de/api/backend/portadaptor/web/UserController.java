@@ -1,21 +1,19 @@
 package de.api.backend.portadaptor.web;
 
-import de.api.backend.application.utils.JwtUtils;
 import de.api.backend.application.user.UserService;
+import de.api.backend.application.utils.JwtUtils;
 import de.api.backend.application.utils.ResponseUtils;
 import de.api.backend.domain.user.RoleEntity;
 import de.api.backend.domain.user.RoleEntityFactory;
+import de.api.backend.domain.user.UserEntity;
 import de.api.backend.domain.user.UserEntityFactory;
-import de.api.backend.ui.PushTokenDto;
 import de.api.backend.ui.RoleDto;
 import de.api.backend.ui.RoleToUserDto;
-import de.api.backend.domain.user.UserEntity;
 import de.api.backend.ui.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
-import java.util.*;
+import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -108,14 +106,5 @@ public class UserController {
         } else {
             throw new RuntimeException("Refresh token is missing");
         }
-    }
-
-    @PostMapping("/pushtoken")
-    public ResponseEntity<?> savePushToken(@Valid PushTokenDto pushToken, HttpServletRequest request) {
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
-        String refresh_token = authorizationHeader.substring("Bearer ".length());
-        String username = jwtUtils.getUsernameFromToken(refresh_token);
-        userService.addPushTokenToUser(username, pushToken.getPushToken());
-        return ResponseEntity.ok().build();
     }
 }
