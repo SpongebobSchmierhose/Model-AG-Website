@@ -35,7 +35,6 @@ public class UserEntity {
     private String lastName;
     private String username;
     private String password;
-    private String expoPushToken;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",

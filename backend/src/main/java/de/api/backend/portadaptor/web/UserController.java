@@ -24,7 +24,6 @@ import de.api.backend.domain.user.RoleEntity;
 import de.api.backend.domain.user.RoleEntityFactory;
 import de.api.backend.domain.user.UserEntity;
 import de.api.backend.domain.user.UserEntityFactory;
-import de.api.backend.ui.PushTokenDto;
 import de.api.backend.ui.RoleDto;
 import de.api.backend.ui.RoleToUserDto;
 import de.api.backend.ui.UserDto;
@@ -110,14 +109,5 @@ public class UserController {
         } else {
             throw new RuntimeException("Refresh token is missing");
         }
-    }
-
-    @PostMapping("/pushtoken")
-    public ResponseEntity<?> savePushToken(@Valid PushTokenDto pushToken, HttpServletRequest request) {
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
-        String refresh_token = authorizationHeader.substring("Bearer ".length());
-        String username = jwtUtils.getUsernameFromToken(refresh_token);
-        userService.addPushTokenToUser(username, pushToken.getPushToken());
-        return ResponseEntity.ok().build();
     }
 }

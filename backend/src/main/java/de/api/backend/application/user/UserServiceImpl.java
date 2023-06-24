@@ -2,7 +2,10 @@ package de.api.backend.application.user;
 
 import de.api.backend.domain.ports.RoleRepository;
 import de.api.backend.domain.ports.UserRepository;
-import de.api.backend.domain.user.*;
+import de.api.backend.domain.user.RoleEntity;
+import de.api.backend.domain.user.RoleEnum;
+import de.api.backend.domain.user.UserEntity;
+import de.api.backend.domain.user.UserEntityFactory;
 import de.api.backend.ui.UserDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -64,12 +67,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<UserEntity> getUsers() {
         return userRepository.findAll();
-    }
-
-    @Override
-    public void addPushTokenToUser(String username, String pushToken) {
-        Optional<UserEntity> user = userRepository.findByUsername(username);
-        user.ifPresent(userEntity -> userEntity.setExpoPushToken(pushToken));
     }
 
     @Override
