@@ -1,19 +1,20 @@
 package de.api.backend.application.utils;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import de.api.backend.domain.user.RoleEntity;
-import de.api.backend.domain.user.UserEntity;
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.stream.Collectors;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import de.api.backend.domain.user.UserEntity;
+import jakarta.servlet.http.HttpServletRequest;
 @Component
 public class JwtUtils {
 

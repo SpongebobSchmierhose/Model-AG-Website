@@ -1,12 +1,11 @@
 package de.api.backend.application.user;
 
+import java.util.List;
+
 import de.api.backend.domain.user.RoleEntity;
 import de.api.backend.domain.user.RoleEnum;
 import de.api.backend.domain.user.UserEntity;
 import de.api.backend.ui.UserDto;
-
-import java.util.List;
-import java.util.Set;
 
 public interface UserService {
     UserEntity saveUser(UserEntity user);

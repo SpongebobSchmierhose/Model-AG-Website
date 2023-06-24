@@ -1,12 +1,11 @@
 package de.api.backend.configuration.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.api.backend.application.utils.JwtUtils;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.util.MimeTypeUtils.*;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,13 +14,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+import de.api.backend.application.utils.JwtUtils;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-@Slf4j
 @Component
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtils jwtUtils;

@@ -1,38 +1,40 @@
 package de.api.backend.portadaptor.web;
 
-import de.api.backend.application.utils.JwtUtils;
+import static org.springframework.http.HttpHeaders.*;
+import static org.springframework.http.HttpStatus.*;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import de.api.backend.application.user.UserService;
+import de.api.backend.application.utils.JwtUtils;
 import de.api.backend.application.utils.ResponseUtils;
 import de.api.backend.domain.user.RoleEntity;
 import de.api.backend.domain.user.RoleEntityFactory;
+import de.api.backend.domain.user.UserEntity;
 import de.api.backend.domain.user.UserEntityFactory;
 import de.api.backend.ui.PushTokenDto;
 import de.api.backend.ui.RoleDto;
 import de.api.backend.ui.RoleToUserDto;
-import de.api.backend.domain.user.UserEntity;
 import de.api.backend.ui.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.io.IOException;
-import java.net.URI;
-import java.util.*;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@Slf4j
 public class UserController {
     private final UserService userService;
 
