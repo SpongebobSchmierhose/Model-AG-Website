@@ -12,6 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static de.api.backend.domain.user.RoleEnum.*;
 
@@ -35,10 +38,22 @@ public class WebSecurityConfiguration {
                 .build();
     }
 
+    //TODO DELETE IN PROD
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, MyCustomDsl customDsl) throws Exception {
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, MyCustomDsl customDsl, CorsConfigurationSource corsConfigurationSource) throws Exception {
         http
-                .csrf().disable()
+                .csrf().disable().cors().configurationSource(corsConfigurationSource).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests().requestMatchers("/api/login/**", "/api/register/**", "/api/token/refresh/**", "/api/files/**").permitAll()
                 .and().authorizeHttpRequests().requestMatchers(HttpMethod.GET, "/api/user/**", "/api/location/**", "/api/pushtoken/**").hasAnyAuthority(ROLE_USER.name(), ROLE_MODERATOR.name(), ROLE_ADMIN.name())

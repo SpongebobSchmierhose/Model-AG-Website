@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import {RouterLink, RouterView} from "vue-router"
 import HelloWorld from "./components/HelloWorld.vue"
+import {useLoginGuard} from "@/services/LoginGuard"
+
+const { sendUserToLoginIfNotLoggedIn } = useLoginGuard()
+sendUserToLoginIfNotLoggedIn()
 </script>
 
 <template>
