@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {ref} from "vue"
-import {authenticate} from "@/views/Login/components/login-api"
+import { ref } from "vue"
+import { authenticate } from "@/views/Login/components/login-api"
 import router from "@/router"
 
 const email = ref("")
 const password = ref("")
-const errorMessage = ref("") // Add a reactive variable to hold the error message
+const errorMessage = ref("")
 
 const onSubmit = async (event: Event) => {
     event.preventDefault()
@@ -13,10 +13,9 @@ const onSubmit = async (event: Event) => {
     try {
         const token = await authenticate(email.value, password.value)
         localStorage.setItem("authToken", JSON.stringify(token))
-        router.push({ name: "home" })
+        await router.push({ name: "home" })
     } catch (error) {
         errorMessage.value = "Authentication failed. Please try again."
-        // You can also log the error or perform additional error handling actions here
     }
 }
 </script>
@@ -33,8 +32,6 @@ const onSubmit = async (event: Event) => {
             <br />
             <button type="submit">Login</button>
         </form>
-
-        <!-- Display error message if present -->
         <p v-if="errorMessage">{{ errorMessage }}</p>
     </div>
 </template>

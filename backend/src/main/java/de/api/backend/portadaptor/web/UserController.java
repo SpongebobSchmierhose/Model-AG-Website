@@ -1,22 +1,5 @@
 package de.api.backend.portadaptor.web;
 
-import static org.springframework.http.HttpHeaders.*;
-import static org.springframework.http.HttpStatus.*;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import de.api.backend.application.user.UserService;
 import de.api.backend.application.utils.JwtUtils;
 import de.api.backend.application.utils.ResponseUtils;
@@ -30,6 +13,18 @@ import de.api.backend.ui.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @RestController
 @RequestMapping("/api")
@@ -57,16 +52,11 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<UserEntity>getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        try {
-            String refresh_token = authorizationHeader.substring("Bearer ".length());
-            String username = jwtUtils.getUsernameFromToken(refresh_token);
-            UserEntity user = userService.getUser(username);
-            return ResponseEntity.ok().body(user);
-        } catch (Exception exception) {
-            responseUtils.sendErrorResponse(exception, response, FORBIDDEN);
-        }
-        return ResponseEntity.badRequest().body(null);
-    }
+        String refresh_token = authorizationHeader.substring("Bearer ".length());
+        String username = jwtUtils.getUsernameFromToken(refresh_token);
+        UserEntity user = userService.getUser(username);
+        return ResponseEntity.ok().body(user);
+}
 
     @GetMapping("/users")
     public ResponseEntity<List<UserEntity>>getUsers() {

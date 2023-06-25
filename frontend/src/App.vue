@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {RouterLink, RouterView} from "vue-router"
+import { RouterLink, RouterView } from "vue-router"
 import HelloWorld from "./components/HelloWorld.vue"
-import {useLoginGuard} from "@/services/LoginGuard"
+import { useLoginGuard } from "@/services/LoginGuard"
 
 const { sendUserToLoginIfNotLoggedIn } = useLoginGuard()
 sendUserToLoginIfNotLoggedIn()
@@ -17,6 +17,7 @@ sendUserToLoginIfNotLoggedIn()
             <nav>
                 <RouterLink to="/">Home</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
+                <RouterLink to="/profile">Profile</RouterLink>
             </nav>
         </div>
     </header>
