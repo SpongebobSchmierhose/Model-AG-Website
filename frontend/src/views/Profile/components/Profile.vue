@@ -6,7 +6,7 @@ import { getProfile } from "@/views/Profile/components/profile-api"
 const { getTokenFromLocalStorage } = useLoginGuard()
 const username = ref("")
 const errorMessage = ref("")
-const getUsername = () => {
+const setUsername = () => {
     try {
         const { accessToken } = getTokenFromLocalStorage()
         getProfile(accessToken).then((profile) => {
@@ -16,7 +16,7 @@ const getUsername = () => {
         errorMessage.value = "Authentication failed. Please try again."
     }
 }
-getUsername()
+setUsername()
 </script>
 
 <template>
